@@ -5,11 +5,13 @@ import com.ownershiptask.tasks.models.User;
 import com.ownershiptask.tasks.repositories.FileRepositoryImpl;
 import com.ownershiptask.tasks.repositories.UserRepositoryImpl;
 import org.junit.jupiter.api.*;
+import uk.co.jemos.podam.api.PodamFactory;
 
 class AccessServiceTest {
     private final FileRepositoryImpl fileRepository = new FileRepositoryImpl();
     private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
     private final AccessService accessService = new AccessService(fileRepository, userRepository);
+    private PodamFactory factory;
 
     @BeforeEach
     void testSetup() throws Exception{
