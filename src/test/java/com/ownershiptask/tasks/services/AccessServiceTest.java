@@ -302,7 +302,7 @@ class AccessServiceTest {
         user4.takeOwnershipFiles(fileRepository.getById(1),fileRepository.getById(2));
         Assertions.assertEquals(user3, fileRepository.getById(1).getOwner());
         Assertions.assertEquals(user1, fileRepository.getById(2).getOwner());
-        //Assertions.assertEquals(2, accessService.getNumberOwnedFiles());
+        Assertions.assertEquals(2, accessService.getNumberOwnedFiles());
         fileRepository.getAll().forEach(file-> System.out.println(file.getOwner()));
     }
 }

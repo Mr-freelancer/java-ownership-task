@@ -7,9 +7,10 @@ public class File {
     private AccessService accessService;
 
     public void setOwner(User owner) {
-        this.owner = owner;
         if(accessService != null)
+            if(this.owner == null)
             accessService.setNumberOwnedFiles(accessService.getNumberOwnedFiles() + 1);
+        this.owner = owner;
         owner.addToOwnedFilesList(this);
     }
 
