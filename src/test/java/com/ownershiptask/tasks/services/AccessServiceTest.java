@@ -5,13 +5,12 @@ import com.ownershiptask.tasks.models.User;
 import com.ownershiptask.tasks.repositories.FileRepositoryImpl;
 import com.ownershiptask.tasks.repositories.UserRepositoryImpl;
 import org.junit.jupiter.api.*;
-import uk.co.jemos.podam.api.PodamFactory;
+
 
 class AccessServiceTest {
-    private final FileRepositoryImpl fileRepository = new FileRepositoryImpl();
-    private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
-    private final AccessService accessService = new AccessService(fileRepository, userRepository);
-    private PodamFactory factory;
+    private final FileRepositoryImpl fileRepository = new FileRepositoryImpl();;
+    private final UserRepositoryImpl userRepository = new UserRepositoryImpl();;
+    private final AccessService accessService = new AccessService(fileRepository, userRepository);;
 
     @BeforeEach
     void testSetup() throws Exception{
@@ -28,17 +27,16 @@ class AccessServiceTest {
             int fileId = i;
             File file;
             file = new File();
-            file.setAccessService(accessService);
             file.setID(++fileId);
+            file.setAccessService(accessService);
             fileRepository.save(file);
         }
     }
 
     @AfterEach
     void dumpAllData(){
-        fileRepository.getAll().clear();
         userRepository.getAll().clear();
-        accessService.setNumberOwnedFiles(0);
+        fileRepository.getAll().clear();
     }
 
     @Test
@@ -85,8 +83,8 @@ class AccessServiceTest {
     }
 
     @Test
-    public void getCountPossibleInsertsSmallRemainderTest() {
-
+    public void getCountPossibleInsertsBigRemainder() {
+        // 16 files and 10 users. Remainder of division is 6. 6 out of 10 is over 50%
         Assertions.assertEquals( 2,accessService.getCountPossibleInserts(userRepository.getById(0)));
         Assertions.assertEquals( 2,accessService.getCountPossibleInserts(userRepository.getById(1)));
         Assertions.assertEquals( 2,accessService.getCountPossibleInserts(userRepository.getById(2)));
@@ -156,13 +154,12 @@ class AccessServiceTest {
     }
 
     @Test
-    public void getCountPossibleInsertsBigRemainder() {
+    public void getCountPossibleInsertsSmallRemainder() {
         userRepository.deleteById(userRepository.getAll().size()-1);
         userRepository.deleteById(userRepository.getAll().size()-1);
         userRepository.deleteById(userRepository.getAll().size()-1);
 
-        // Now 16 files and 7 users
-
+        // Now 16 files and 7 users. Remainder 2
         for (int i = 0; i < userRepository.getAll().size(); i++) {
             Assertions.assertEquals(2, accessService.getCountPossibleInserts(userRepository.getById(i)));
         }
@@ -223,8 +220,6 @@ class AccessServiceTest {
         userRepository.getById(2).takeOwnershipFiles(fileRepository.getById(15));
         Assertions.assertEquals(0,accessService.getCountPossibleInserts(userRepository.getById(2)));
 
-        System.out.println("Result of getCountPossibleInsertsBigRemainder Test:");
-        fileRepository.getAll().forEach(file -> System.out.println(file.getOwner()));
     }
 
     @Test
@@ -246,5 +241,68 @@ class AccessServiceTest {
         Assertions.assertEquals(1, accessService.getNumberOwnedFiles());
         user1.deleteFilesOwnership(fileRepository.getById(1));
         Assertions.assertEquals(0, accessService.getNumberOwnedFiles());
+    }
+
+    @Test
+    void getPossibleInsertsWithoutRemainder(){
+        // Make 8 users for share with 16 users
+        userRepository.deleteById(9);
+        userRepository.deleteById(8);
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 16; j++) {
+                // All users try access to all files
+                userRepository.getById(i).takeOwnershipFiles(fileRepository.getById(j));
+            }
+            // All users have the same number of files
+            Assertions.assertEquals(2, userRepository.getById(i).getCountOwnedFiles());
+        }
+    }
+
+    @Test
+    void commonTaskTest(){
+        User user1 = userRepository.getById(0);
+        user1.setName("User 1");
+        User user2 = userRepository.getById(1);
+        user2.setName("User 2");
+        User user3 = userRepository.getById(2);
+        user3.setName("User 3");
+        User user4 = userRepository.getById(3);
+        user4.setName("User 4");
+
+        // User 1 try to take ownership to files 2,3
+        user1.takeOwnershipFiles(fileRepository.getById(1), fileRepository.getById(2));
+        Assertions.assertEquals(user1, fileRepository.getById(1).getOwner());
+        Assertions.assertEquals(user1, fileRepository.getById(2).getOwner());
+        Assertions.assertEquals(2, accessService.getNumberOwnedFiles());
+
+        // User 2 try to take ownership to files 2,4,5
+
+        user2.takeOwnershipFiles(fileRepository.getById(1), fileRepository.getById(3), fileRepository.getById(4));
+        Assertions.assertEquals(user1, fileRepository.getById(1).getOwner());
+        Assertions.assertEquals(user2, fileRepository.getById(3).getOwner());
+        Assertions.assertEquals(user2, fileRepository.getById(4).getOwner());
+        Assertions.assertEquals(4, accessService.getNumberOwnedFiles());
+
+        // Set user 3 active for rewrite access to file 2
+        user3.setActive(true);
+        user3.takeOwnershipFiles(fileRepository.getById(1));
+        Assertions.assertEquals(4, accessService.getNumberOwnedFiles());
+
+        Assertions.assertEquals(user3, fileRepository.getById(1).getOwner());
+
+        // Try to delete ownership for user 2 to files 2,4,5
+        user2.deleteFilesOwnership(fileRepository.getById(1), fileRepository.getById(3), fileRepository.getById(4));
+
+        Assertions.assertEquals(user3, fileRepository.getById(1).getOwner());
+        Assertions.assertEquals(null, fileRepository.getById(3).getOwner());
+        Assertions.assertEquals(null, fileRepository.getById(4).getOwner());
+
+        // User 4 with low priority (isActive false) try to take ownership on files 2,3
+        user4.takeOwnershipFiles(fileRepository.getById(1),fileRepository.getById(2));
+        Assertions.assertEquals(user3, fileRepository.getById(1).getOwner());
+        Assertions.assertEquals(user1, fileRepository.getById(2).getOwner());
+        //Assertions.assertEquals(2, accessService.getNumberOwnedFiles());
+        fileRepository.getAll().forEach(file-> System.out.println(file.getOwner()));
     }
 }

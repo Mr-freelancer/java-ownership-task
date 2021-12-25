@@ -1,5 +1,4 @@
 package com.ownershiptask.tasks.models;
-
 import com.ownershiptask.tasks.services.AccessService;
 
 public class File {
@@ -9,7 +8,8 @@ public class File {
 
     public void setOwner(User owner) {
         this.owner = owner;
-        accessService.setNumberOwnedFiles(accessService.getNumberOwnedFiles() + 1);
+        if(accessService != null)
+            accessService.setNumberOwnedFiles(accessService.getNumberOwnedFiles() + 1);
         owner.addToOwnedFilesList(this);
     }
 
@@ -21,19 +21,15 @@ public class File {
         this.owner = null;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public void message(){
-        System.out.println("I'm a file. My ID is " + this.getID() + " " + this);
+    public User getOwner() {
+        return owner;
     }
 
     public int getID() {
         return ID;
     }
 
-    public User getOwner() {
-        return owner;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }
