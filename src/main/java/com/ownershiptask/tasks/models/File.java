@@ -8,7 +8,7 @@ public class File {
 
     public void setOwner(User owner) {
         if(accessService != null)
-            // Case for rewrite access, not increment if now owners
+            // Case for rewrite access. Not increment if no owners
             if(this.owner == null)
             accessService.setNumberOwnedFiles(accessService.getNumberOwnedFiles() + 1);
         this.owner = owner;
