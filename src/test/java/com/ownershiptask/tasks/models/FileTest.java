@@ -16,8 +16,8 @@ class FileTest {
 
     @BeforeEach
     void fileTestSetup(){
-        user = new User("1");
-        user2 = new User("2");
+        user = new User(1);
+        user2 = new User(2);
 
         file = new File();
         file.setID(777);

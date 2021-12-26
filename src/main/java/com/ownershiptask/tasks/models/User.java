@@ -10,10 +10,10 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 public class User {
-    private final String id;
+    private final int id;
     private String name;
     private boolean isActive;
-    private List<File> ownedFilesList = new ArrayList<>();
+    private List<File> ownedFiles = new ArrayList<>();
     private AccessService accessService;
 
     public void takeOwnershipFiles(File...files){
@@ -29,19 +29,19 @@ public class User {
     }
 
     public void addToOwnedFilesList(File file){
-        ownedFilesList.add(file);
+        ownedFiles.add(file);
     }
 
     public void removeFromOwnedFilesList(File file){
-        ownedFilesList.remove(file);
+        ownedFiles.remove(file);
     }
 
-    public List<File> getOwnedFilesList(){
-        return ownedFilesList;
+    public List<File> getOwnedFiles(){
+        return ownedFiles;
     }
 
     public int getCountOwnedFiles(){
-        return ownedFilesList.size();
+        return ownedFiles.size();
     }
 
     public void deleteFilesOwnership(File...files){

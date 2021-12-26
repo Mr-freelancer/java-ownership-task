@@ -2,8 +2,10 @@ package com.ownershiptask.tasks.services;
 
 import com.ownershiptask.tasks.models.File;
 import com.ownershiptask.tasks.models.User;
+import com.ownershiptask.tasks.repositories.AccessRepositoryImpl;
 import com.ownershiptask.tasks.repositories.FileRepositoryImpl;
 import com.ownershiptask.tasks.repositories.UserRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,8 +15,7 @@ public class AccessService {
     private static final int BALANCE_STEP = 2;
     private final FileRepositoryImpl fileRepository;
     private final UserRepositoryImpl userRepository;
-    private int numberOwnedFiles = 0;
-    Set<User> owners = new HashSet<>();
+    private AccessRepositoryImpl accessRepository;
 
     public AccessService(FileRepositoryImpl fileRepository, UserRepositoryImpl userRepository) {
         this.fileRepository = fileRepository;
@@ -33,15 +34,24 @@ public class AccessService {
     }
 
     public int getNumberOwnedFiles() {
-        return numberOwnedFiles;
+        return accessRepository.getNumberOwnedFiles();
     }
 
     public void setNumberOwnedFiles(int numberOwnedFiles) {
-        this.numberOwnedFiles = numberOwnedFiles;
+        accessRepository.setNumberOwnedFiles(numberOwnedFiles);
+    }
+
+    public void setFileOwner(File file, User user){
+         // Case for rewrite access. Not increment if no owners
+        if(file.getOwner() == null)
+            accessRepository.incrementNumberOwnedFiles();
+        file.setOwner(user);
+        user.addToOwnedFilesList(file);
+        accessRepository.addOwner(user);
     }
 
     public int getCountUserFiles(User user){
-        return user.getOwnedFilesList().size();
+        return user.getOwnedFiles().size();
     }
 
     public void addFilesAccess(User user, File... files){
@@ -51,19 +61,24 @@ public class AccessService {
             if (isFileOwned(file) & !user.isActive()) {
                 continue;
             }
-            file.setOwner(user);
-            owners.add(user);
+            setFileOwner(file,user);
+            accessRepository.addOwner(user);
         }
     }
 
     public void deleteFilesAccess(User user, File...files){
         Arrays.stream(files).forEach(file -> {
             if(file.getOwner().equals(user)){
-                file.setOwner();
+                file.deleteOwner();
                 user.removeFromOwnedFilesList(file);
-                numberOwnedFiles--;
+                accessRepository.decrementNumberOwnedFiles();
             }
         });
+    }
+
+    @Autowired
+    public void setAccessRepository(AccessRepositoryImpl accessRepositoryImpl) {
+        this.accessRepository = accessRepositoryImpl;
     }
 
     public int getCountPossibleInserts(User user){
