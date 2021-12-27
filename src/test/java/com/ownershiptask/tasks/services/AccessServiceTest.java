@@ -9,13 +9,13 @@ import org.junit.jupiter.api.*;
 
 
 class AccessServiceTest {
-    private final FileRepositoryImpl fileRepository = new FileRepositoryImpl();;
-    private final UserRepositoryImpl userRepository = new UserRepositoryImpl();;
+    private final FileRepositoryImpl fileRepository = new FileRepositoryImpl();
+    private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
     private final AccessService accessService = new AccessService(fileRepository, userRepository);
     private final AccessRepositoryImpl accessRepository = new AccessRepositoryImpl();
 
     @BeforeEach
-    void testSetup() throws Exception{
+    void testSetup() {
         // Create 10 users
         accessService.setAccessRepository(accessRepository);
         for (int i = 0; i < 10; i++){

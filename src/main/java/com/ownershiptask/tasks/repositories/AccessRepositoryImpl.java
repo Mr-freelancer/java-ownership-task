@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Repository
 public class AccessRepositoryImpl {
-    private Set<User> owners = new HashSet<>();
+    private final Set<User> owners = new HashSet<>();
     private int numberOwnedFiles = 0;
 
     public Set<User> getOwners() {
