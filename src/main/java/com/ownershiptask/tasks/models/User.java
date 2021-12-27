@@ -3,9 +3,8 @@ import com.ownershiptask.tasks.services.AccessService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @RequiredArgsConstructor
@@ -13,7 +12,7 @@ public class User {
     private final int id;
     private String name;
     private boolean isActive;
-    private List<File> ownedFiles = new ArrayList<>();
+    private Set<File> ownedFiles = new HashSet<>();
     private AccessService accessService;
 
     public void takeOwnershipFiles(File...files){
@@ -36,7 +35,7 @@ public class User {
         ownedFiles.remove(file);
     }
 
-    public List<File> getOwnedFiles(){
+    public Set<File> getOwnedFiles(){
         return ownedFiles;
     }
 

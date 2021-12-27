@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Repository
 public class AccessRepositoryImpl {
-    Set<User> owners = new HashSet<>();
+    private Set<User> owners = new HashSet<>();
     private int numberOwnedFiles = 0;
 
     public Set<User> getOwners() {
@@ -17,14 +17,6 @@ public class AccessRepositoryImpl {
 
     public int getNumberOwnedFiles() {
         return numberOwnedFiles;
-    }
-
-    public void setOwners(Set<User> owners) {
-        this.owners = owners;
-    }
-
-    public void setNumberOwnedFiles(int numberOwnedFiles) {
-        this.numberOwnedFiles = numberOwnedFiles;
     }
 
     public void incrementNumberOwnedFiles(){

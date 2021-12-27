@@ -37,10 +37,6 @@ public class AccessService {
         return accessRepository.getNumberOwnedFiles();
     }
 
-    public void setNumberOwnedFiles(int numberOwnedFiles) {
-        accessRepository.setNumberOwnedFiles(numberOwnedFiles);
-    }
-
     public void setFileOwner(File file, User user){
          // Case for rewrite access. Not increment if no owners
         if(file.getOwner() == null)
