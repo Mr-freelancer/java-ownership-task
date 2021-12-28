@@ -12,7 +12,7 @@ import java.util.*;
 
 @Service
 public class AccessService {
-    private static final int BALANCE_STEP = 2;
+    private static final int BALANCE_STEP = 1;
     private final FileRepositoryImpl fileRepository;
     private final UserRepositoryImpl userRepository;
     private AccessRepositoryImpl accessRepository;
@@ -92,7 +92,7 @@ public class AccessService {
                     return leftFiles;
                 }
             }else{
-                if( unOwnedFiles <= disBalanceFiles && unOwnedFiles != 0 && getCountUserFiles(user) < disBalanceFiles + BALANCE_STEP){
+                if( unOwnedFiles <= disBalanceFiles && unOwnedFiles != 0 && getCountUserFiles(user) <= disBalanceFiles + BALANCE_STEP){
                     return relevant - getCountUserFiles(user) + 1;
                 }else{
                     return leftFiles;
