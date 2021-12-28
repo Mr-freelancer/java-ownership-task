@@ -60,7 +60,7 @@ public class ReminderAccessService implements AccessService{
         for (File file : files) {
             if (getNumberPossibleAccess(user) <= 0)
                 return;
-            if (isFileOwned(file) & !user.isActive()) {
+            if (isFileOwned(file) & !user.isHighPriority()) {
                 continue;
             }
             setFileOwner(file,user);

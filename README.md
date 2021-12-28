@@ -59,4 +59,27 @@
 
 #### UML диаграмма
 ![alt text](src/screenshots/uml-diagram.jpeg "UML диаграмма")​
-#### Пример кода
+#### Пример кода  
+    // Создаем экземпляр класса добавив, в него репозитории с файлами и пользователями 
+    ReminderAccessService accessService = new ReminderAccessService(fileRepository, userRepository);
+    User user = userRepository.getById(0);
+
+    // Получить количество файлов, которыми может владеть данный пользователь 
+    accessService.getNumberPossibleAccess(user));
+
+    // Получить право на файлы через метод пользователя
+    user.takeOwnershipFiles(fileRepository.getById(0),fileRepository.getById(1));
+
+    // Получить право на файлы через accessService
+    accessService.addFilesAccess(user, fileRepository.getById(0),fileRepository.getById(1));
+
+    // Удалить права на файлы через метод пользователя
+    user.deleteFilesOwnership(fileRepository.getById(0));
+
+    // Удалить права на файлы через через accessService
+    accessService.deleteFilesAccess(user, fileRepository.getById(0),fileRepository.getById(1))
+
+    // По умолчанию пользователи в Low Priority - не могут переписать право, если файл уже во владении
+    // Чтобы пользователь мог перезаписывать права на уже занятые файлы, нужно выставить highPriority
+    user.setHighPriority(true);
+    

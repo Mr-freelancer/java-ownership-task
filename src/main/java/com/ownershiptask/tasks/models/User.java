@@ -11,7 +11,7 @@ import java.util.Set;
 public class User {
     private final int id;
     private String name;
-    private boolean isActive;
+    private boolean isHighPriority;
     private Set<File> ownedFiles = new HashSet<>();
     private ReminderAccessService reminderAccessService;
 
@@ -23,8 +23,8 @@ public class User {
         this.reminderAccessService = reminderAccessService;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isHighPriority() {
+        return isHighPriority;
     }
 
     public void addToOwnedFilesList(File file){
