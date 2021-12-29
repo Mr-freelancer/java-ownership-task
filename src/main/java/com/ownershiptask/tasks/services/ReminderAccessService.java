@@ -43,7 +43,7 @@ public class ReminderAccessService implements AccessService{
     }
 
     public void setFileOwner(File file, User user){
-         // Case for rewrite access. Not increment if no owners
+         // Case for rewrite access. Increment only if file has no owner
         if(file.getOwner() == null)
             accessRepository.incrementNumberOwnedFiles();
         file.setOwner(user);
