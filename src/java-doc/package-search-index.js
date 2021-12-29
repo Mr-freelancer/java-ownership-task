@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.ownershiptask.tasks"},{"l":"com.ownershiptask.tasks.models"},{"l":"com.ownershiptask.tasks.repositories"},{"l":"com.ownershiptask.tasks.services"}];updateSearchResults();
