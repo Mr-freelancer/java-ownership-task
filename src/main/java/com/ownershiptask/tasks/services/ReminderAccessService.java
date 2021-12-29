@@ -138,21 +138,20 @@ public class ReminderAccessService implements AccessService{
 
 
     /**
-     * Return the number of possible access to the files.
+     * <p>Return the number of possible access to the files.
      * Calculations are based on the remainder of the
-     * number of files divided by the number of users.
-     * There are two possible calculation options and two sub-options for them:
-     * 1. Remainder from division is more than half of the divisor (countIndex >= 0.5):
-     *    1.1 First users will get an integer from division + 1 (relevant + 1).
-     *        The number of such users is equal to the remainder of the division.
-     *    1.2 The remaining users will receive an integer from the division (relevant).
-     * 2. Remainder from division is less than half of the divisor (countIndex < 0.5):
-     *    2.1 All users will get an integer from the division (relevant).
-     *    2.2 When the number of free files(unOwnedFiles) becomes equal
+     * number of files divided by the number of users.</p>
+     * <p>There are two possible calculation options and two sub-options for them:</p>
+     * <p>1. Remainder from division is more than half of the divisor (countIndex >= 0.5):</p>
+     *    <p>1.1 First users will get an integer from division + 1 (relevant + 1).
+     *        The number of such users is equal to the remainder of the division.</p>
+     *    <p>1.2 The remaining users will receive an integer from the division (relevant).</p>
+     * <p>2. Remainder from division is less than half of the divisor (countIndex < 0.5):</p>
+     *    <p>2.1 All users will get an integer from the division (relevant).</p>
+     *    <p>2.2 When the number of free files(unOwnedFiles) becomes equal
      *        to the remainder of the division(disBalanceFiles),
-     *        the first users to request will have access to them.
-     *
-     * Each user cannot receive more than BALANCE_STEP + disBalanceFiles(remainder of the division).
+     *        the first users to request will have access to them.</p>
+     * <p>Each user cannot receive more than BALANCE_STEP + disBalanceFiles(remainder of the division).</p>
      *
      * @param user the user whom to count a number of files to access.
      * @return the number of possible access to the files.

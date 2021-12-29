@@ -1,0 +1,4 @@
+com.ownershiptask.tasks
+com.ownershiptask.tasks.models
+com.ownershiptask.tasks.repositories
+com.ownershiptask.tasks.services
