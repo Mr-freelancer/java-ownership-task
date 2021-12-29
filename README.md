@@ -39,8 +39,8 @@
 владение‌ ‌при‌ ‌появлении‌ ‌владельца‌ ‌нормального‌ ‌приоритета.
 
 ### Визуальный комментарий
-![alt text](src/screenshots/comment_1.jpg "Визуальный комментарий 1")​
-![alt text](src/screenshots/comment_2.jpg "Визуальный комментарий 2")​
+![alt text](screenshots/comment_1.jpg "Визуальный комментарий 1")​
+![alt text](screenshots/comment_2.jpg "Визуальный комментарий 2")​
 ---
 ### Решение
 #### Описание решения  
@@ -64,7 +64,7 @@
 
 
 #### UML диаграмма
-![alt text](src/screenshots/uml-diagram.jpeg "UML диаграмма")​
+![alt text](screenshots/uml-diagram.jpeg "UML диаграмма")​
 #### Пример кода  
     // Создаем экземпляр класса, добавив в него репозитории с файлами и пользователями 
     ReminderAccessService accessService = new ReminderAccessService(fileRepository, userRepository);
