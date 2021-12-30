@@ -63,6 +63,10 @@
 3. Удаление прав на файл пользователем: O(1).
 
 
+#### Java-doc
+Документация доступна по адресу: [Java-doc](https://mr-freelancer.github.io/java-ownership-task/index.html)   
+Основная логика: [ReminderAccessService](https://mr-freelancer.github.io/java-ownership-task/com/ownershiptask/tasks/services/ReminderAccessService.html)
+
 #### UML диаграмма
 ![alt text](screenshots/uml-diagram.jpeg "UML диаграмма")​
 #### Пример кода  

@@ -20,6 +20,7 @@ import java.util.*;
 public class ReminderAccessService implements AccessService{
     /** Constant of balance.
      *  Affects the number of files received for the user.
+     *
      * @see #getNumberPossibleAccess(User)
      * */
     private static final int BALANCE_STEP = 1;
@@ -40,7 +41,7 @@ public class ReminderAccessService implements AccessService{
     /**
      * Return true if this file has owner
      *
-     * @param file the file to check if the owner exists.
+     * @param file file to check
      * @return true if this file has owner
      */
     public boolean isFileOwned(File file){
@@ -149,8 +150,8 @@ public class ReminderAccessService implements AccessService{
      * <p>2. Remainder from division is less than half of the divisor (countIndex < 0.5):</p>
      *    <p>2.1 All users will get an integer from the division (relevant).</p>
      *    <p>2.2 When the number of free files(unOwnedFiles) becomes equal
-     *        to the remainder of the division(disBalanceFiles),
-     *        the first users to request will have access to them.</p>
+     *           to the remainder of the division(disBalanceFiles),
+     *           the first users to request will have access to them.</p>
      * <p>Each user cannot receive more than BALANCE_STEP + disBalanceFiles(remainder of the division).</p>
      *
      * @param user the user whom to count a number of files to access.
