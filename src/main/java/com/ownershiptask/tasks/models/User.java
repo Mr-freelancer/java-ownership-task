@@ -1,5 +1,5 @@
 package com.ownershiptask.tasks.models;
-import com.ownershiptask.tasks.services.ReminderAccessService;
+import com.ownershiptask.tasks.services.AccessService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -13,14 +13,14 @@ public class User {
     private String name;
     private boolean isHighPriority;
     private Set<File> ownedFiles = new HashSet<>();
-    private ReminderAccessService reminderAccessService;
+    private AccessService accessService;
 
     public void takeOwnershipFiles(File...files){
-        reminderAccessService.addFilesAccess(this,files);
+        accessService.addFilesAccess(this,files);
     }
 
-    public void setReminderAccessService(ReminderAccessService reminderAccessService) {
-        this.reminderAccessService = reminderAccessService;
+    public void setAccessService(AccessService accessService) {
+        this.accessService = accessService;
     }
 
     public boolean isHighPriority() {
@@ -44,7 +44,7 @@ public class User {
     }
 
     public void deleteFilesOwnership(File...files){
-        reminderAccessService.deleteFilesAccess(this,files);
+        accessService.deleteFilesAccess(this,files);
     }
 
 

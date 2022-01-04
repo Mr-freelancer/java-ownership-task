@@ -21,7 +21,7 @@ class ReminderAccessServiceTest {
         for (int i = 0; i < 10; i++){
             User user = new User(i);
             user.setName("User " + i);
-            user.setReminderAccessService(accessService);
+            user.setAccessService(accessService);
             userRepository.save(user);
         }
 
